@@ -20,16 +20,6 @@ spec:
         name: kubecost
         namespace: kubecost
         values: |
-          global:
-            grafana:
-              enabled: true
-          prometheus:
-            server:
-              persistentVolume:
-                size: 1Gi
-          persistentVolume:
-            enabled: true
-            size: 1Gi
           ingress:
             enabled: true
             className: nginx
