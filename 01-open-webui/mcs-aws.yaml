@@ -5,8 +5,7 @@ metadata:
 spec:
   clusterSelector:
     matchLabels:
-      # type: aws
-      group: demo
+      type: aws
   serviceSpec:
     services:
       - template: ingress-nginx-4-11-3
@@ -17,7 +16,7 @@ spec:
             controller:
               hostPort:
                 enabled: true
-      - template: open-webui-5-14-0
+      - template: open-webui-5-13-0
         name: open-webui
         namespace: open-webui
         values: |
@@ -27,15 +26,15 @@ spec:
               limits: {cpu: 500m, memory: 100Mi, ephemeral-storage: 100Mi}
           pipelines:
             resources:
-              requests: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
-              limits: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
+              requests: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
+              limits: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
           resources:
             requests: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
             limits: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
           copyAppData:
             resources:
-              requests: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
-              limits: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
+              requests: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
+              limits: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
           ingress:
             enabled: true
             class: "nginx"
