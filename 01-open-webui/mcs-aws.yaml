@@ -20,21 +20,6 @@ spec:
         name: open-webui
         namespace: open-webui
         values: |
-          ollama:
-            resources:
-              requests: {cpu: 500m, memory: 100Mi, ephemeral-storage: 100Mi}
-              limits: {cpu: 500m, memory: 100Mi, ephemeral-storage: 100Mi}
-          pipelines:
-            resources:
-              requests: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
-              limits: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
-          resources:
-            requests: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
-            limits: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
-          copyAppData:
-            resources:
-              requests: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
-              limits: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
           ingress:
             enabled: true
             class: "nginx"
