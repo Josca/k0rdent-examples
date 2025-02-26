@@ -28,3 +28,6 @@ kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"Sec
 kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"external-dns-tokens-cloudflare":"'$EXTERNAL_DNS_TOKENS_CLOUDFLARE'"}}'
 kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"kubecost-tokens-kubecost":"'$KUBECOST_TOKENS_KUBECOST'"}}'
 ~~~
+
+## Examples
+- [Open WebUI](./01-open-webui/open-webui.md)

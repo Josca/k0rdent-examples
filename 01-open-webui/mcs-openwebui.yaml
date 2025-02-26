@@ -1,0 +1,42 @@
+apiVersion: k0rdent.mirantis.com/v1alpha1
+kind: MultiClusterService
+metadata:
+  name: open-webui
+spec:
+  clusterSelector:
+    matchLabels:
+      # type: aws
+      group: demo
+  serviceSpec:
+    services:
+      - template: ingress-nginx-4-11-3
+        name: ingress-nginx
+        namespace: ingress-nginx
+        values: |
+          ingress-nginx:
+            controller:
+              hostPort:
+                enabled: true
+      - template: open-webui-5-14-0
+        name: open-webui
+        namespace: open-webui
+        values: |
+          ollama:
+            resources:
+              requests: {cpu: 500m, memory: 100Mi, ephemeral-storage: 100Mi}
+              limits: {cpu: 500m, memory: 100Mi, ephemeral-storage: 100Mi}
+          pipelines:
+            resources:
+              requests: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
+              limits: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
+          resources:
+            requests: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
+            limits: {cpu: 200m, memory: 500Mi, ephemeral-storage: 100Mi}
+          copyAppData:
+            resources:
+              requests: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
+              limits: {cpu: 200m, memory: 100Mi, ephemeral-storage: 100Mi}
+          ingress:
+            enabled: true
+            class: "nginx"
+            host: 'openwebui.example.com'
