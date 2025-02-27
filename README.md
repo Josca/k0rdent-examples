@@ -4,7 +4,6 @@
 - Mothership Kubernetes cluster with [k0rdent 0.1.0 installed](https://docs.k0rdent.io/v0.1.0/admin-installation/#install-k0rdent).
 - AWS account configured for k0rdent ([guide](https://docs.k0rdent.io/v0.1.0/admin-prepare/#aws), steps 1-8)
 - `helm` - The Kubernetes package manager (`brew install helm`)
-- `yq` - Tool for simple templates (`brew install yq`)
 
 ## Environment
 Prepare setup script with your env vars (credentials, secrets, passwords)
@@ -33,5 +32,32 @@ kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"Acc
 kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"SecretAccessKey":"'$AWS_SECRET_ACCESS_KEY'"}}'
 ~~~
 
-## Examples
-- [Open WebUI](./01-open-webui/open-webui.md)
+## Run example
+Universal workflow to run any example:
+~~~bash
+# open-webui, kubecost
+export EXAMPLE="kubecost"
+
+# 1) Install k0rdent service template
+helm upgrade --install $EXAMPLE oci://ghcr.io/k0rdent/catalog/charts/kgst \
+  -n kcm-system \
+  -f $EXAMPLE/helm-values-kgst.yaml
+
+# 2) Deploy testing AWS cluster with unique name
+sed "s/SUFFIX/${USER}/g" $EXAMPLE/cld.yaml | kubectl apply -f -
+
+# 3) Wait for AWS cluster "ready" state
+./scripts/wait_for_cluster.sh
+
+kubectl get secret aws-example-$USER-kubeconfig -o=jsonpath={.data.value} | base64 -d > kubeconfigs/aws-example
+
+# 4) Deploy service using multiclusterservice
+kubectl apply -f $EXAMPLE/mcs-aws.yaml
+KUBECONFIG=kubeconfigs/aws-example ./scripts/wait_for_deployment.sh
+
+# 5) Remove multiclusterservice
+kubectl delete multiclusterservice $EXAMPLE
+KUBECONFIG=kubeconfigs/aws-example ./scripts/wait_for_deployment_removal.sh
+
+./scripts/wait_for_cluster_removal.sh
+~~~
