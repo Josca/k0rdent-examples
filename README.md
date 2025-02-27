@@ -4,6 +4,7 @@
 - Mothership Kubernetes cluster with [k0rdent 0.1.0 installed](https://docs.k0rdent.io/v0.1.0/admin-installation/#install-k0rdent).
 - AWS account configured for k0rdent ([guide](https://docs.k0rdent.io/v0.1.0/admin-prepare/#aws), steps 1-8)
 - `helm` - The Kubernetes package manager (`brew install helm`)
+- Google Chrome or Chromium browser for web pages testing (Optionally)
 
 ## Environment
 Prepare setup script with your env vars (credentials, secrets, passwords)
@@ -48,17 +49,22 @@ sed "s/SUFFIX/${USER}/g" $EXAMPLE/cld.yaml | kubectl apply -f -
 ./scripts/wait_for_cluster.sh
 
 # Store kubeconfig file for managed AWS cluster
-kubectl get secret aws-example-$USER-kubeconfig -o=jsonpath={.data.value} | base64 -d > kubeconfigs/aws-example
+kubectl get secret aws-example-$USER-kubeconfig -o=jsonpath={.data.value} | base64 -d > kcfg
 
 # Deploy service using multiclusterservice
 kubectl apply -f $EXAMPLE/mcs-aws.yaml
-KUBECONFIG=kubeconfigs/aws-example ./scripts/wait_for_deployment.sh
+KUBECONFIG=kcfg ./scripts/wait_for_deployment.sh
 
+# Test webpage if exposed
+KUBECONFIG=kcfg ./scripts/test_webpage.sh
+
+# Cleaning section
 # Remove multiclusterservice
 kubectl delete multiclusterservice $EXAMPLE
-KUBECONFIG=kubeconfigs/aws-example ./scripts/wait_for_deployment_removal.sh
+KUBECONFIG=kcfg ./scripts/wait_for_deployment_removal.sh
 
 # Remove cluster
+# Be careful, you can use existing cluster for other examples!!!
 kubectl delete cld aws-example-$USER
 ./scripts/wait_for_cluster_removal.sh
 ~~~

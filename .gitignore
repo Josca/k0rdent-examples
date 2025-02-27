@@ -1,3 +1,4 @@
 scripts/set_envs.sh
 kubeconfigs/*
 *ign*
+kcfg
