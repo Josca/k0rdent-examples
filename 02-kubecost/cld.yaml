@@ -15,6 +15,5 @@ spec:
     publicIP: false
     region: eu-central-1
     worker:
-      instanceType: t3.xlarge
-      rootVolumeSize: 32
+      instanceType: t3.medium
     workersNumber: 1
