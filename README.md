@@ -25,8 +25,6 @@ Set real secrets values from env vars:
 ~~~bash
 kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"AccessKeyID":"'$AWS_ACCESS_KEY_ID'"}}'
 kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"SecretAccessKey":"'$AWS_SECRET_ACCESS_KEY'"}}'
-kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"external-dns-tokens-cloudflare":"'$EXTERNAL_DNS_TOKENS_CLOUDFLARE'"}}'
-kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"kubecost-tokens-kubecost":"'$KUBECOST_TOKENS_KUBECOST'"}}'
 ~~~
 
 ## Examples
