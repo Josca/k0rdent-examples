@@ -1,5 +1,11 @@
 # k0rdent examples
 
+## Requirements
+- Mothership Kubernetes cluster with [k0rdent 0.1.0 installed](https://docs.k0rdent.io/v0.1.0/admin-installation/#install-k0rdent).
+- AWS account configured for k0rdent ([guide](https://docs.k0rdent.io/v0.1.0/admin-prepare/#aws), steps 1-8)
+- `helm` - The Kubernetes package manager (`brew install helm`)
+- `yq` - Tool for simple templates (`brew install yq`)
+
 ## Environment
 Prepare setup script with your env vars (credentials, secrets, passwords)
 ~~~bash
