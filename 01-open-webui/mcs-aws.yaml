@@ -16,7 +16,7 @@ spec:
             controller:
               hostPort:
                 enabled: true
-      - template: open-webui-5-13-0
+      - template: open-webui-5-20-0
         name: open-webui
         namespace: open-webui
         values: |

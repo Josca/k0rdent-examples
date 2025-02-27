@@ -5,5 +5,5 @@
 helm upgrade --install open-webui oci://ghcr.io/k0rdent/catalog/charts/kgst -n kcm-system \
   --set "helm.repository.url=https://helm.openwebui.com" \
   --set "helm.charts[0].name=open-webui" \
-  --set "helm.charts[0].version=5.14.0"
+  --set "helm.charts[0].version=5.20.0"
 ~~~
