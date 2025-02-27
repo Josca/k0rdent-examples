@@ -20,6 +20,11 @@ spec:
         name: open-webui
         namespace: open-webui
         values: |
+          ollama:
+            ollama:
+              models:
+                pull: [smollm:135m]
+                run: [smollm:135m]
           ingress:
             enabled: true
             class: "nginx"
