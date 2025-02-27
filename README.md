@@ -38,26 +38,27 @@ Universal workflow to run any example:
 # open-webui, kubecost
 export EXAMPLE="kubecost"
 
-# 1) Install k0rdent service template
+# Install k0rdent service template
 helm upgrade --install $EXAMPLE oci://ghcr.io/k0rdent/catalog/charts/kgst \
   -n kcm-system \
   -f $EXAMPLE/helm-values-kgst.yaml
 
-# 2) Deploy testing AWS cluster with unique name
+# Deploy testing AWS cluster with unique name
 sed "s/SUFFIX/${USER}/g" $EXAMPLE/cld.yaml | kubectl apply -f -
-
-# 3) Wait for AWS cluster "ready" state
 ./scripts/wait_for_cluster.sh
 
+# Store kubeconfig file for managed AWS cluster
 kubectl get secret aws-example-$USER-kubeconfig -o=jsonpath={.data.value} | base64 -d > kubeconfigs/aws-example
 
-# 4) Deploy service using multiclusterservice
+# Deploy service using multiclusterservice
 kubectl apply -f $EXAMPLE/mcs-aws.yaml
 KUBECONFIG=kubeconfigs/aws-example ./scripts/wait_for_deployment.sh
 
-# 5) Remove multiclusterservice
+# Remove multiclusterservice
 kubectl delete multiclusterservice $EXAMPLE
 KUBECONFIG=kubeconfigs/aws-example ./scripts/wait_for_deployment_removal.sh
 
+# Remove cluster
+kubectl delete cld aws-example-$USER
 ./scripts/wait_for_cluster_removal.sh
 ~~~
