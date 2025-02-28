@@ -52,6 +52,7 @@ helm upgrade --install $EXAMPLE oci://ghcr.io/k0rdent/catalog/charts/kgst \
 kubectl get secret aws-example-$USER-kubeconfig -o=jsonpath={.data.value} | base64 -d > kcfg
 
 # Deploy service using multiclusterservice
+# Note: there is complete configurable values list in $EXAMPLE/values-orig.yaml folder.
 kubectl apply -f $EXAMPLE/mcs-aws.yaml
 KUBECONFIG=kcfg ./scripts/wait_for_deployment.sh
 
