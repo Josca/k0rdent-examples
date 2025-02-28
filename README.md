@@ -36,7 +36,7 @@ kubectl patch secret aws-credential-secret -n kcm-system -p='{"stringData":{"Sec
 ## Run example
 Universal workflow to run any example:
 ~~~bash
-# open-webui, kubecost
+# open-webui, kubecost, opencost
 export EXAMPLE="open-webui"
 
 # Install k0rdent service template
