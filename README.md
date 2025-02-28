@@ -39,14 +39,14 @@ Universal workflow to run any example:
 # open-webui, kubecost, opencost
 export EXAMPLE="open-webui"
 
+# Deploy testing AWS cluster with unique name
+sed "s/SUFFIX/${USER}/g" $EXAMPLE/cld.yaml | kubectl apply -f -
+./scripts/wait_for_cluster.sh
+
 # Install k0rdent service template
 helm upgrade --install $EXAMPLE oci://ghcr.io/k0rdent/catalog/charts/kgst \
   -n kcm-system \
   -f $EXAMPLE/helm-values-kgst.yaml
-
-# Deploy testing AWS cluster with unique name
-sed "s/SUFFIX/${USER}/g" $EXAMPLE/cld.yaml | kubectl apply -f -
-./scripts/wait_for_cluster.sh
 
 # Store kubeconfig file for managed AWS cluster
 kubectl get secret aws-example-$USER-kubeconfig -o=jsonpath={.data.value} | base64 -d > kcfg
