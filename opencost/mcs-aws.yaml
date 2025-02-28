@@ -24,5 +24,6 @@ spec:
             ui:
               ingress:
                 enabled: true
-                className: nginx
-                hosts: ['opencost.example.com']
+                ingressClassName: nginx
+                hosts:
+                  - host: 'opencost.example.com'
